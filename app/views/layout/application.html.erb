@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+<title>Meedan Media Panel</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8" />
+<script src="http://www.google.com/jsapi?key=ABQIAAAAmxDIRcelCE7QQOeFeIJlKBSNUlKPpkanmm8MYWO4hNtRvT6XHxRqCbGOKRB1KZE4NWNgoJ-5h4kUYg" type="text/javascript"></script>
+<script>
+var map_marker_chase = true;
+var map_markers = [
+];
+</script>
+</head>
+<body>
+<div style="width:900px;">
+ <a href="/"><img src="/images/header.png"/></a>
+ <br/>
+ <div style="float:right;">
+  <form style="display:inline" action="?search&lang=<%=@lang%>"><input name="search"></input><input type=submit></input></form> <a style="border:1px solid red" href="javascript:location.href='http://sources.meedan.net/notes/new/0?v=4;website='+encodeURIComponent(location.href)+';name='+encodeURIComponent(document.title)">Add to Meedan Media Site</a> 
+  | <a href="/users">users</a> 
+  | <a href="/notes">media sources</a>
+  | <a href="/notes/new">new media source</a>
+  | <a href="?lang=arabic">arabic</a>
+  | <a href="?lang=english">english</a>
+  </div>
+</div>
+<div style="clear:both"/>
+<br/>
+<hr/>
+<%= catch_content :for_layout %>
+
+<hr/>
+<!--
+<a href="javascript:(function(){ _my_script=document.createElement('SCRIPT'); _my_script.type='text/javascript'; _my_script.src='http://mysite.com/script.js?'; document.getElementsByTagName('head')[0].appendChild(_my_script); })();">Meedan Media Bookmarklet</a>
+<br/>
+<a href="javascript: z = document.createElement('script'); z.src = 'http://sources.meedan.net/notes/new/0?username=hhh'; z.type = 'text/javascript'; void(document.body.appendChild(z));">Add to Meedan Media</a>
+<hr/>
+-->
+
+
+</body>
+
+<script type="text/javascript">
+
+var map_div = null;
+var map = null;
+var map_marker;
+var lat = 26.000;
+var lon = 44.500;
+var zoom = 4;
+
+function map_callback() {
+
+  // start?
+  if(map) return;
+  map = new google.maps.Map2(document.getElementById("map"));
+  var mapControl = new GMapTypeControl();
+  map.addControl(mapControl);
+  map.addControl(new GLargeMapControl());
+  // map.removeMapType(G_HYBRID_MAP);
+
+  // listen to map moves
+  if(map_marker_chase)
+  GEvent.addListener(map, "moveend", function() {
+    var center = map.getCenter();
+    map_save_location(center);
+    map_set_marker(center);
+  });
+
+  // set default position
+  var center = map_get_location(); 
+  map.setCenter(center,zoom);
+
+  // add defaults
+  map_add_markers();
+}
+
+function map_add_markers() {
+
+  var baseIcon = new GIcon();
+  baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+  baseIcon.iconSize = new GSize(20, 34);
+  baseIcon.shadowSize = new GSize(37, 34);
+  baseIcon.iconAnchor = new GPoint(9, 34);
+  baseIcon.infoWindowAnchor = new GPoint(9, 2);
+  baseIcon.infoShadowAnchor = new GPoint(18, 25);
+
+  for(var i = 0; i < map_markers.length; i++) {
+    var info = map_markers[i];
+    var point = new google.maps.LatLng(info.lat,info.lon);
+
+    var myicon = new GIcon(baseIcon);
+    myicon.image = "http://sources.meedan.net/markers/icons/marker" + i + ".png";
+    var options = { icon:myicon, draggable:true };
+    var marker = new GMarker(point,options);
+
+    map.addOverlay(marker);
+    marker.mydescription = map_markers[i].description;
+    marker.myhandler = function() {
+        this.openInfoWindowHtml(this.mydescription); }
+    GEvent.addListener(marker, "click", marker.myhandler );
+  }
+}
+
+function map_set_marker(point) {
+  if(map_marker) {
+    map.removeOverlay(map_marker);
+    map_marker = null;
+  }
+  if(!map_marker) {
+    map_marker = new GMarker(point,{draggable: true});
+    map.addOverlay(map_marker);
+    GEvent.addListener(map_marker, "dragend", function() {
+       map_save_location(map_marker.getPoint());
+    });
+  }
+}
+
+function map_get_location() {
+  var x = document.getElementById("note[longitude]");
+  var y = document.getElementById("note[latitude]");
+  if(x && y ) {
+    x = parseFloat(x.value);
+    y = parseFloat(y.value);
+  }
+  if(x && y && ( x >= -180 && x <= 180 ) && (y >= -90 && y <= 90) ) {
+    return new google.maps.LatLng(y,x);
+  }
+  return new google.maps.LatLng(lat,lon);
+}
+
+function map_save_location(point) {
+  var x = document.getElementById("note[longitude]");
+  var y = document.getElementById("note[latitude]");
+  if(x && y ) {
+    x.value = point.x;
+    y.value = point.y;
+  }
+}
+
+function map_startup() {
+  if(map_div) return;
+  map_div = document.getElementById("map");
+  if(!map_div) return;
+  google.setOnLoadCallback(map_callback);
+  google.load("maps", "2.x");
+}
+
+map_startup();
+
+</script>
+
+</html>

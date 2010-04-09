@@ -1,0 +1,535 @@
+/**
+* BASIC CSS TEXT STYLES & OVERRIDES
+*/
+
+body, table
+{
+  font-family: Arial, "Vera Bitstream Sans", Helvetica, sans-serif;
+  font-size: 12px;
+}
+form
+{
+  padding: 0;
+  margin: 0;
+}
+p
+{
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+
+
+/**
+* LINKS
+*/
+a
+{
+  font-weight: bold;
+  text-decoration: none;
+  color: #5561cf;
+}
+a:active, a:hover
+{
+  color: #0b8734;
+  text-decoration: underline;
+}
+a.header /* consider better definition here? */
+{
+  color: #33c;
+}
+/* style for the little question mark icons */
+a.help
+{
+  /* innerHTML should be just a 9x9 spacer */
+  background: url('/Images/ui/qmark.gif') no-repeat left top;
+  font-size: 10px; /* Safari needs this for some reason */
+  margin-left: 4px;
+}
+a.help:hover
+{
+  background: url('/Images/ui/qmark.gif') no-repeat left -18px;
+}
+a.rating
+{
+   font-weight: normal;
+   font-size: 10px;
+   color: #8c8c8c;
+}
+
+
+
+/**
+* LARGE TEXT
+*/
+big   { font-size: 1.1em; }
+h1    { font-size: 18px; /*2em;*/ }
+h2    { font-size: 16px; /*1.7em;*/ }
+h3    { font-size: 14px; /*1.4em;*/ }
+h4    { font-size: 12px; /*1.2em;*/ }
+h1, h2, h3, h4
+{
+  margin: 0;
+  line-height: 1.5em;
+}
+h3.subtitle
+{
+  font-style:italic;
+  color: #666666;
+}
+h1.pathTitle,
+h2.pathTitle
+{
+  color: #494949;
+}
+.head,
+h1, h2, h3, h4
+{
+  color: #333333;
+  font-style: normal;
+  font-weight: bold;
+}
+.head
+{
+  font-size: 18px;
+}
+.headsub
+{
+  font-size: 14px;
+  font-weight: bold;
+  color: #8c8c8c;
+}
+
+
+/**
+* SMALL TEXT classes
+* many of these are used only in the strange 'ratings_member.tpl'
+*/
+small {
+  font-size:.9em;
+}
+.fine_print {
+  font-size: 10px;
+  font-style: italic;
+}
+.editorial {
+  font-size: 10px;
+}
+.editorial_italic {
+  font-size: 10px;
+  font-style: italic;
+}
+.editorial_gray {
+  font-size: 10px;
+  color: #333333;
+}
+.note {
+  font-size: 11px;
+  color: #333333;
+  font-weight:normal;
+  padding-right: 10px;
+}
+.small_note {
+  font-size: 10px;
+  color: #666666;
+}
+.caption {
+  font-size: 10px;
+  color: #333333;
+  font-weight:normal;
+}
+.left_heading_small {
+  font-size: 11px;
+  color: #333333;
+  padding-left: 10px;
+  padding-bottom: 6px;
+}
+.explanation
+{
+  font-size: 11px;
+  color: #666;
+}
+
+
+
+/**
+* SUBHEADS / SUBSECTIONS
+*/
+td.sectionspacer {
+  padding-bottom:10px;
+}
+td.sectionbottomspacer {
+  padding-bottom:20px;
+}
+td.subsectionbottomspacer {
+  padding-bottom:10px;
+}
+.subhead {
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+.subhead_med_small {
+  font-size: 13px;
+  font-weight: bold;
+}
+.subhead_italic {
+  font-size: 12px;
+  font-weight: bold;
+  font-style:italic;
+  padding-bottom: 6px;
+}
+.subhead_plain {
+  font-size: 14px;
+}
+.subhead_small {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+.subhead_small_pad {
+  font-size: 12px;
+  margin-bottom:3px;
+}
+.subhead_small_plain {
+  font-size: 12px;
+  font-weight: normal;
+}
+a.subhead_small_plain:link,
+a.subhead_small_plain:visited,
+a.subhead_small_plain:active,
+a.subhead_small_plain:hover {
+  font-weight: normal;
+}
+
+a.subsubhead {
+	display: block;
+	color: #999;
+	font-weight: bold;
+	margin: 0.6em 0;
+	width: 100%;
+	font-size: 11px;
+}
+
+/**
+* MISC. TEXT STYLES
+*/
+
+/* PUBNAME */
+.pubname { 
+  color: #111111;
+  font-size: 12px;
+}
+.pubname a:link {
+  color: #666666;
+  font-size: 12px;
+}
+.pubname a:visited {
+  color: #999999;
+  font-size: 12px;
+}
+
+/* RATE IT & its new friend RATED IT */
+.rate_it,
+.rate_it a:link,
+.rate_it a:active,
+.rate_it a:hover,
+.rate_it a:visited {
+  /* font-size: 9px; */
+  color: #0B8734;
+}
+.rated_it,
+.rated_it a:link,
+.rated_it a:active,
+.rated_it a:hover,
+.rated_it a:visited {
+  color: #666;
+}
+/* just for those raquos */
+.more {
+  font-size: 130%;
+  line-height: 80%
+}
+
+/**
+* INTERACTION STYLES/COLORS
+*/
+.error,
+.red,
+.required span.softHeader,
+div.notice span.softHeader
+{
+  color: #b50b05; /* #FF831F; */
+  font-weight: bold;
+}
+.alert
+{
+  font-weight: bold;
+  color: #FF831F;
+}
+/* .required, */
+.guess
+{
+  background-color: #fff3a4; /* too bright #fff9d7; */ /* too wimpy #faec73; */
+}
+div.notice
+{
+  padding: 10px;
+  padding-left: 35px;
+  background: #fff3a4 url('/Images/ui/xmark.gif') no-repeat 10px 9px;
+  margin-top: 1em;
+  border: 1px solid #f8c945;
+}
+
+
+/* used in most story listings */
+.story_quote {
+  color: #333333;
+  font-weight: normal;
+  line-height: 1.2em;
+}
+
+.backpath
+{
+  font-weight:bold;
+}
+.sidebarText
+{
+  font-size: 11px;
+  padding-bottom: 2px;
+}
+div.mbox div.blurb /* was: div.story div.blurb */
+{
+  color: #333;
+  margin-bottom: 5px;
+}
+.softHeader
+{
+  color: #333;
+  font-weight: bold;
+}
+span.avgRatingNumber
+{
+  line-height: 15px;
+  font-size: 10px;
+  vertical-align: top;
+  color: #666;
+}
+.input_black {
+  font-family: Verdana; /* FF defaults to monospaced */
+  font-size: 11px;
+}
+.pull_down_black {
+  font-family: Verdana; /* IE defaults to some really condensed font */
+  font-size: 11px;
+}
+.button {
+  font-size: 12px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+}
+.button_bold {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+}
+
+.body_black {
+  font-size: 12px;
+}
+.body_black_small {
+  font-size: 11px;
+  color: #666;
+  font-weight: normal;
+}
+a.body_black_small:link,
+a.body_black_small:visited,
+a.body_black_small:active,
+a.body_black_small:hover {
+  font-size: 11px;
+  font-weight: normal;
+}
+.body_gray {
+  font-size: 12px;
+  color: #333;
+}
+.table_cell_black {
+  font-size: 12px;
+  padding-bottom:20px;
+  padding-right:7px;
+  vertical-align:top;
+}
+.table_cell_rating {
+  padding-bottom:12px;
+  vertical-align:top;
+}
+
+
+
+/**
+* LAYOUT/TEXT STYLES
+*/
+
+table.topicListing th
+{
+  height: 20px;
+  padding: 0 5px;
+  text-align: left;
+  font-size: 13px;
+  color: #333;
+  background-color: #e8e8e8;
+  border-bottom: 1px solid #bababa;
+}
+table.topicListing td
+{
+  padding: 0 5px 10px 5px;
+  line-height: 1.4em;
+}
+
+/* CATEGORY SUBHEAD ETC. */
+div.category_sub_head
+{
+  padding: 0 0.25em 0.25em 0.25em;
+  margin: 5px 0em 10px 0em;
+  border-bottom: 1px solid #bababa;
+  font-size: 14px;
+}
+div.category_sub_head a
+{
+  color: #33c;
+  /* font-weight: bold; */
+}
+div.category_sub_head a.rssLink,
+div.category_sub_head div.shareLinks
+{
+  float: right;
+}
+div.category_sub_head div.shareLinks,
+div.category_sub_head div.shareLinks a
+{
+  color: #666;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 2px;
+}
+/* based on category_sub_head but with subtler text */
+div.tabSubHeader
+{
+  padding: 0 0.25em 0.25em 0.25em;
+  margin: 5px 0em 10px 0em;
+  border-bottom: 1px solid #bababa;
+  color: #666;
+  font-size: 12px;
+  font-weight: bold;
+}
+div.category_sub_foot
+{
+  padding: 0 0 0 0.25em;
+}
+
+/* NAVBAR */
+.navbar {
+  font-size: 13px;
+  text-align:center;
+  background-color:#CCCCCC;
+  font-weight: bold;
+  cursor:pointer;
+}
+.navbar_no_link
+{
+  font-size: 13px;
+  color: #333;
+  background-color: #e8e8e8;
+  border-bottom: 1px solid #bababa;
+  font-weight: bold;
+}
+.navbar_small_title {
+  font-size: 13px;
+  text-align:left;
+  color: #333333;
+  background-color:#DDDDDD;
+  font-weight: bold;
+  padding-top:2px;
+  padding-bottom:2px;
+}
+.navbar_small {
+  font-size: 12px;
+  text-align:center;
+  background-color:#CCCCCC;
+  font-weight: bold;
+  cursor:pointer;
+}
+.navbar_small_no_link {
+  font-size: 12px;
+  text-align:center;
+  background-color:#CCCCCC;
+  font-weight: bold;
+}
+.navbar_small_hilite {
+  font-size: 12px;
+  text-align:center;
+  color: #FFFFFF;
+  background-color:#999999;
+  font-weight: bold;
+}
+.navbar a:link, 
+.navbar a:active,
+.navbar a:hover,
+.navbar a:visited,
+.navbar_small a:link,
+.navbar_small a:active,
+.navbar_small a:hover,
+.navbar_small a:visited {
+  font-weight: bold;
+  text-decoration : none; 
+}
+
+/* 'My Recommendation' AJAX tool, still used in index_editors.htm */
+.storyRateValues { font-size: 1.0em; }
+.storyRateValues a:link, 
+.storyRateValues a:visited {
+	border-color: #BBBBBB;
+	border-width: 1px;
+	border-style: solid;
+	background-color : white; 
+	text-decoration : none; 
+	font-weight: bold;
+
+}
+.storyRateValues a:hover {
+	color : black; 
+	border-color: #666666;
+	border-width: 1px;
+	border-style: solid;
+	background-color : #EEEEEE; 
+	text-decoration : none; 
+	font-weight: bold;
+}
+
+/* category heads; used only in index_editors.htm. can gut? */
+.category_head_background {
+  background-color: #DDDDDD;
+  cursor: pointer;
+}
+.category_head {
+  color: #333333;
+  font-size: 1.5em;
+  text-transform: uppercase; 
+  font-weight: bold;
+  letter-spacing: .09em;
+  padding: 0 0 0 0.25em;
+  margin: 0 0 0.5em 0;
+}
+
+.horz_spacer {
+  padding: 4px 0 10px 0;
+  vertical-align:middle;
+}
+body.small_form {
+  margin:0 0 0 5px;
+  padding:0 0 0 5px;
+}

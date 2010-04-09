@@ -1,0 +1,4 @@
+Sources
+
+A fairly nice utility to let folks add fine-grained information about media outlets such as who is behind them and their location. We based this on work by NewsTrust. It has a nice procedural ui layout builder that is driven by the data model.
+

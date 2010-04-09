@@ -1,0 +1,791 @@
+/**
+* LAYOUT and specific CSS for ui widgets (corresponds to ui.js in places)
+* some overlap with text.css and vice-versa
+* basically divided into these sections: NAV, MBOX, RBOX, FORMS/BUTTONS
+*/
+
+
+/**
+* GENERIC
+*/
+
+body
+{
+  background-color: #fff;
+	margin: 0;
+	padding: 0;
+	/* text-align: center; */ /* can't remember why you have to use <center> instead */
+}
+img
+{
+	border: 0;
+}
+div.brace
+{
+  margin: 0 15px;
+	width: 800px;
+	text-align: left;
+}
+
+
+/**
+* NAV
+*/
+
+div.nav
+{
+	width: 800px;
+	margin-top: 10px;
+}
+div.topbar
+{
+}
+div.topbar div.logo
+{
+  margin-top: 13px; /* FIXME. Safari wants this to be 11px. not the right solution. */
+	width: 450px;
+	float: left;
+}
+div.topbar div.userlinks
+{
+	width: 350px;
+	float: left;
+	text-align: right;
+	font-weight: bold;
+	color: #525252;
+}
+div.topbar div.userlinks a
+{
+	color: #525252;
+}
+div.topbar div.userlinks a.username
+{
+	color: #5561cf;
+}
+div.topbar div.searchBox
+{
+  margin-top: 2px;
+}
+div.nav div.tabbar
+{
+	clear: left;
+}
+div.nav div.tabbar ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+div.nav div.tabbar ul li
+{
+	float: left;
+	margin-right: 1px;
+}
+div.nav div.tabbar ul li a
+{
+  display: block;
+	text-align: center;
+	text-decoration: none;
+	color: #666;
+	font-weight: bold;
+}
+div.nav div.tabbar ul li a span
+{
+  display: block;
+  width: 87px;
+	height: 26px;
+}
+div.nav div.tabbar ul li a                { background: url('/Images/ui/top-nav-tabs_mid.gif') repeat-x }
+div.nav div.tabbar ul li a span.lbar      { background: url('/Images/ui/top-nav-tabs_l.gif') no-repeat left top }
+div.nav div.tabbar ul li a span.rbar      { background: url('/Images/ui/top-nav-tabs_r.gif') no-repeat right top }
+div.nav div.tabbar ul li a.sel,
+div.nav div.tabbar ul li a:hover          { background: url('/Images/ui/top-nav-tabs_mid.gif') repeat-x left -26px }
+div.nav div.tabbar ul li a.sel span.lbar,
+div.nav div.tabbar ul li a:hover span.lbar{ background: url('/Images/ui/top-nav-tabs_l.gif') no-repeat left -26px }
+div.nav div.tabbar ul li a.sel span.rbar,
+div.nav div.tabbar ul li a:hover span.rbar{ background: url('/Images/ui/top-nav-tabs_r.gif') no-repeat right -26px }
+div.nav div.tabbar ul li a span.text      { text-align: center; padding-top: 7px; height: 19px; cursor: pointer; }
+div.nav div.tabbar ul li a:hover          { color: #333 }
+div.nav div.tabbar ul li a.sel:hover      { color: #666 }
+
+/* FINE TUNING VALUES */
+div.nav div.tabbar ul li.lastTab a span   { width: 96px }
+div.nav div.tabbar ul li.lastTab          { margin-right: 0px }
+
+div.nav div.linkbar
+{
+  height: 24px;
+	clear: left;
+	background: url('/Images/ui/sub-nav_bg.gif') repeat;
+	margin-bottom: 0.5em;
+	color: #33c;
+	font-size: 12px;
+	border-left: 1px solid #9aaadd;
+	border-right: 1px solid #9aaadd;
+}
+div.nav div.linkbar ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+div.nav div.linkbar ul li
+{
+	float: left;
+	text-align: center;
+}
+div.nav div.linkbar ul li span.lbar
+{
+  display: block;
+  width: 88px; /* TUNE (= 800 / 9)*/
+  height: 14px;
+  padding: 5px 0;
+  background: url('/Images/ui/sub-nav_bg_l.gif') no-repeat left top;
+  cursor: pointer; /* for IE6 */
+}
+div.nav div.linkbar ul li.firstTab span.lbar
+{
+  width: 86px; /* TUNE */
+  background: none;
+}
+div.nav div.linkbar ul li a
+{
+  font-weight: normal;
+  color: #33c;
+}
+
+
+/**
+* MBOX
+*/
+
+div.mboxregion
+{
+	width: 550px;
+	margin-right: 15px; /* SHOULD BE 15px */
+	float: left;
+}
+div.mbox
+{
+	width: 550px;
+	margin-bottom: 15px;
+}
+
+
+/**
+* MBOX TABS
+*/
+
+div.mbox div.tabHeader
+{
+	float: left;
+	width: 120px;
+	height: 24px;
+	
+	color: #666;
+	font-size: 13px; /* 12px? */
+	font-weight: bold;
+	
+	/* border-bottom: solid 1px #bababa; */
+	background: url('/Images/ui/cont-tabs-none.gif') repeat-x;
+}
+div.mbox div.tabHeader div
+{
+	margin-top: 5px;
+}
+div.mbox ul.tabs
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+div.mbox ul.tabs li
+{
+	float: left;
+}
+div.mbox ul.tabs li a
+{
+  display: block;
+  font-size: 13px;
+  color: #333;
+	text-decoration: none;
+	font-weight: normal;
+}
+div.mbox ul.tabs li a.sel
+{
+  color: #666;
+  font-weight: bold;
+}
+div.mbox ul.tabs li span
+{
+  display: block;
+  width: 143px;
+  height: 24px;
+}
+
+/* sometimes need to gray out links, so we use span.nolink instead of a. see story overview page */
+div.mbox ul.tabs li span.nolink                 { background: url('/Images/ui/cont-tabs_mid.gif') repeat-x left -24px }
+div.mbox ul.tabs li span.lbar                   { background: url('/Images/ui/cont-tabs_l.gif') no-repeat left -24px }
+div.mbox ul.tabs li.firstTab span.lbar          { background: url('/Images/ui/cont-tabs_l.gif') no-repeat -1px -24px }
+div.mbox ul.tabs li span.rbar                   { background: url('/Images/ui/cont-tabs_r.gif') no-repeat right -24px }
+div.mbox ul.tabs li span.nolink span.text       { color: #666; }
+
+/* all the background image management for three tab states with variable-width tabs. yikes */
+div.mbox ul.tabs li a                           { background: url('/Images/ui/cont-tabs_mid.gif') repeat-x }
+div.mbox ul.tabs li a span.lbar                 { background: url('/Images/ui/cont-tabs_l.gif') no-repeat left top }
+div.mbox ul.tabs li.firstTab a span.lbar        { background: url('/Images/ui/cont-tabs_l.gif') no-repeat -1px top }
+div.mbox ul.tabs li a span.rbar                 { background: url('/Images/ui/cont-tabs_r.gif') no-repeat right top }
+div.mbox ul.tabs li a:hover                     { background: url('/Images/ui/cont-tabs_mid.gif') repeat-x left -24px }
+div.mbox ul.tabs li a:hover span.lbar           { background: url('/Images/ui/cont-tabs_l.gif') no-repeat left -24px }
+div.mbox ul.tabs li.firstTab a:hover span.lbar  { background: url('/Images/ui/cont-tabs_l.gif') no-repeat -1px -24px }
+div.mbox ul.tabs li a:hover span.rbar           { background: url('/Images/ui/cont-tabs_r.gif') no-repeat right -24px }
+div.mbox ul.tabs li a.sel:hover,
+div.mbox ul.tabs li a.sel                       { background: url('/Images/ui/cont-tabs-at_mid.gif') repeat-x }
+div.mbox ul.tabs li a.sel:hover span.lbar,
+div.mbox ul.tabs li a.sel span.lbar             { background: url('/Images/ui/cont-tabs-at_l.gif') no-repeat left top }
+div.mbox ul.tabs li.firstTab a.sel:hover span.lbar,
+div.mbox ul.tabs li.firstTab a.sel span.lbar    { background: url('/Images/ui/cont-tabs-at_l.gif') no-repeat -1px top }
+div.mbox ul.tabs li a.sel:hover span.rbar,
+div.mbox ul.tabs li a.sel span.rbar             { background: url('/Images/ui/cont-tabs-at_r.gif') no-repeat right top }
+div.mbox ul.tabs li span.text                   { text-align: center; padding-top: 5px; height: 19px; }
+div.mbox ul.tabs li a span.text                 { cursor: pointer; }
+div.mbox ul.tabs li a.sel                       { font-weight: bold; }
+
+/* FINE TUNING of TAB WIDTHS on various pages */
+div#featuredMbox div.tabHeader              { width: 121px }
+div#topStoriesMbox div.tabHeader            { width: 118px }
+div#topStoriesMbox ul.tabs li a span        { width: 108px }
+/* 4 tabs */
+/* div#storyInfoMbox ul.tabs li span           { width: 137px }
+div#storyInfoMbox ul.tabs li.firstTab span  { width: 139px } */
+/* 3 tabs */
+div#sourceInfoMbox ul.tabs li span,
+div#topicStoriesMBox ul.tabs li span,
+div#subjectStoriesMBox ul.tabs li span,
+div#memberInfoMbox ul.tabs li span          { width: 183px }
+div#sourceInfoMbox ul.tabs li.firstTab span,
+div#topicStoriesMBox ul.tabs li.firstTab span,
+div#subjectStoriesMBox ul.tabs li.firstTab span,
+div#memberInfoMbox ul.tabs li.firstTab span { width: 184px }
+/* 2 tabs */
+div#storyInfoMbox ul.tabs li span,
+div#storiesMBox ul.tabs li span             { width: 275px }
+
+div.mbox div.content
+{
+	border-left: solid 1px #bababa;
+	border-right: solid 1px #bababa;
+	padding: 10px;
+	clear: left;
+}
+div.mbox div.tabbedContent
+{
+  display: none;
+}
+div.mbox div.sel
+{
+  display: block;
+}
+
+/**
+* FEATURED CONTENT
+*/
+div.mbox div.content div div.photo
+{
+  float: right;
+  width: 230px;
+  /* forces some white space to the left of the photo (so the horizontal rule doesn't bleed into it) */
+  padding-left: 15px;
+  padding-top: 5px;
+  background-color: #fff;
+  text-align: center;
+}
+div.mbox div.content div div.photo div.credit
+{
+  color: #8c8c8c;
+  font-size: 10px;
+  text-align: right;
+}
+div.mbox div.content div div.photo div.credit a
+{
+  font-weight: normal;
+}
+
+/**
+* STORY LISTINGS
+*/
+div.mbox div.content div.storyListHeader
+{
+  border-bottom: solid 1px #bababa;
+  margin-bottom: 1em;
+}
+div.mbox div.content ul.stories
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+div.mbox div.content ul.stories li
+{
+  width: 528px;
+  line-height: 1.4em;
+  margin-bottom: 1em;
+  clear: left;
+}
+div.mbox div.content ul.stories li.noListings {
+	color: #999;
+	padding: 1em 30px;
+	width: 468px;
+}
+div.mbox div.content ul.stories li.oddRow
+{
+  background-color: #eee;
+}
+div.mbox div.content ul.stories li div.storyInfo
+{
+  width: 365px;
+  margin-right: 15px;
+  float: left;
+}
+div.mbox div.content ul.stories li div.storyRating
+{
+  width: 148px;
+  text-align: right;
+  float: left;
+}
+
+/* infoBox: 'info' tabs of overview pages */
+div.mbox div.infoBox a
+{
+  font-weight: normal;
+}
+td.lineKey
+{
+  padding-left: 0.25em;
+  width: 120px;
+  color: #666;
+}
+td.lineValue
+{
+  line-height: 1.4em;
+}
+td.lineFull
+{
+  padding-left: 0.25em;
+}
+/* use this to make the absence of data look big */
+div.noContent
+{
+  width: 460px;
+  background-color: #f0f0f0;
+  border: 1px solid #ababab;
+  padding: 30px;
+}
+
+div.mbox div.top
+{
+	background: url('/Images/ui/main-col_top.gif') no-repeat top; 
+	height: 4px;
+	font-size: 4px; /* for IE6 */
+}
+div.mbox div.bottom
+{
+	background: url('/Images/ui/main-col_btm.gif') no-repeat top;
+	height: 4px;
+	font-size: 4px; /* for IE6 */
+}
+
+
+/**
+* RBOX
+*/
+
+div.rboxregion
+{
+	float: left;
+	width: 235px;
+	margin: 0;
+}
+div.rbox
+{
+	width: 235px;
+	margin-bottom: 15px;
+}
+div.rbox div.header
+{
+	background: url('/Images/ui/rt-col_hdr.gif') no-repeat top;
+	height: 24px;
+	font-size: 13px;
+	color: #666;
+	font-weight: bold;
+}
+div.rbox div.header div
+{
+  padding-top: 5px;
+  padding-left: 12px;
+}
+div.rbox div.content
+{
+  border-left: solid 1px #bababa;
+	border-right: solid 1px #bababa;
+	padding: 10px 10px 6px 10px;
+}
+div.rbox div.top
+{
+	background: url('/Images/ui/rt-col_top.gif') no-repeat top; 
+	height: 4px;
+	font-size: 4px; /* for IE6 */
+}
+div.rbox div.bottom
+{
+	background: url('/Images/ui/rt-col_btm.gif') no-repeat top;
+	height: 4px;
+	font-size: 4px; /* for IE6 */
+}
+
+/* this UL refers specifically to the list-of-links; there might later be others */
+div.rbox div.content ul.actions
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	color: #494949;
+}
+div.rbox div.content ul.actions li
+{
+	font-size: 14px;
+  background: url('/Images/ui/starbullet.gif') no-repeat 5px 2px;
+  padding: 4px 0px 4px 30px;
+}
+div.rbox div.blurb
+{
+  color: #8c8c8c;
+  line-height: 1.4em;
+  margin-bottom: 5px;
+}
+/* for 'ratings' boxes on overview pages */
+div.ratingLabel
+{
+  float: left;
+  width: 115px; 
+  color: #8c8c8c
+}
+div.rating
+{
+  float: left;
+  text-align: right;
+  width: 95px;
+}
+div.headRating div.ratingLabel
+{
+  font-weight: bold;
+  width: 95px;
+  color: #333;
+}
+div.headRating div.rating
+{
+  width: 115px;
+}
+div.secondaryRatingSection
+{
+  border-top: 1px solid #bababa;
+  /* margin-top: 1em; */ /* IE6 seldom respects this anyway. just put a <br/> beforehand, grr */
+  padding-top: 1em;
+}
+
+
+/**
+* FOOTER
+*/
+
+div.footer
+{
+  text-align: center;
+  clear: both;
+  font-size: 10px;
+  line-height: 1.5em;
+  color: #666;
+}
+
+
+/**
+* FORMS/BUTTONS
+*/
+
+/* buttons */
+a.formButton
+{
+	display: block;
+	width: 120px;
+	height: 24px;
+	text-decoration: none;
+	color: #3a3a3a;
+}
+a.formButton:hover
+{
+  text-decoration: none;
+  color: #3a3a3a;
+}
+a.formButtonProcessing,
+a.formButtonProcessing:hover
+{
+  color: #999;
+}
+a.formButton span
+{
+	display: block;
+	width: 120px;
+	height: 24px;
+}
+a.formButton span.text
+{
+	text-align: center;
+	padding-top: 5px;
+	height: 19px;
+	cursor: pointer;
+}
+a.formButton				        	{ background: url('/Images/ui/btn-m.gif') repeat-x }
+a.formButton span.lbar			  { background: url('/Images/ui/btn-l.gif') no-repeat left top }
+a.formButton span.rbar			  { background: url('/Images/ui/btn-r.gif') no-repeat right top }
+a.formButtonProcessing,
+a.formButtonSecondary,
+a.formButton:hover				    { background: url('/Images/ui/btn-m.gif') repeat-x left -24px }
+a.formButtonProcessing span.lbar,
+a.formButtonSecondary span.lbar,
+a.formButton:hover span.lbar	{ background: url('/Images/ui/btn-l.gif') no-repeat left -24px }
+a.formButtonProcessing span.rbar,
+a.formButtonSecondary span.rbar,
+a.formButton:hover span.rbar	{ background: url('/Images/ui/btn-r.gif') no-repeat right -24px }
+
+/* search box too bigg... */
+div.topbar a.formButton       { width: 80px; }
+div.topbar a.formButton span  { width: 80px; }
+
+/* review pane panes */
+.formHeader
+{
+  font-weight: bold;
+  color: #494949;
+  margin-left: 5px;
+}
+div.reviewForm
+{
+  width: 480px;
+  margin: 10px;
+}
+/* overrides so we can re-use top nav defs */
+div.reviewForm div.topbar div.logo
+{
+  height: 30px;
+  width: 161px;
+}
+div.reviewForm div.topbar div.userlinks
+{
+  height: 30px;
+  width: 319px;
+}
+
+div.reviewForm div.storyOverview
+{
+  margin-bottom: 1em;
+}
+div.reviewForm div.buttons a,
+div.reviewForm div.buttons input
+{
+  float: right;
+  margin-left: 10px;
+}
+
+/* submit form fields */
+div.formField
+{
+  padding: 5px;
+  margin: 2px 0;
+}
+div.columnedField label
+{
+  padding-top: 5px;
+	width: 120px;
+	float: left;
+}
+input.prompt
+{
+  color: #666;
+}
+
+/* for type-ahead menu */
+ul.typeahead
+{
+	width: 320px;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	border: 1px solid #ababab;
+	display: none;
+	position: absolute;
+	background-color: #fff;
+	z-index: 999; /* more for this ie6 hack grr */
+}
+ul.typeahead li
+{
+	display: block;
+	width: 298px;
+	height: 16px;
+	padding: 3px 10px;
+	margin: 1px;
+	border-top: 1px solid #ababab;
+	color: #333;
+}
+ul.typeahead li span.match
+{
+  background-color: #eee;
+  font-weight: bold;
+}
+ul.typeahead li.sel span.match
+{
+  background-color: #7783ef;
+}
+ul.typeahead li.first
+{
+  border-top: 1px solid #fff;
+}
+ul.typeahead li.sel
+{
+	color: #eee;
+	background-color: #5561cf;
+	text-decoration: none;
+}
+ul.typeahead li.noMatches
+{
+	font-weight: bold;
+	color: #666; /* #FF831F; */
+	background-color: #eee;
+}
+
+/* form panels with disclosure triangles */
+div.panel div.header
+{
+  width: 470px; /* 480 - 2px - 8px */
+  height: 14px;
+	padding: 2px;
+	color: #333;
+	padding-left: 8px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	background: url('/Images/ui/form-section-header.gif') no-repeat left top;
+	cursor: pointer;
+}
+div.panel div.header span.triangle
+{
+  font-size: 10px;
+  margin-right: 3px;
+  background: url('/Images/ui/disclosuretri-shut.gif') no-repeat left top;
+}
+div.sel div.header span.triangle
+{
+  background: url('/Images/ui/disclosuretri-open.gif') no-repeat left top;
+}
+div.panel div.content
+{
+  padding-left: 22px;
+  margin-bottom: 1em;
+	display: none;
+}
+div.sel div.content
+{
+	display: block;
+}
+
+/* more/less links */
+div.moreContent           { display: none }
+div.show div.moreLink     { display: none }
+div.show div.moreContent  { display: block }
+a.moreLink
+{
+  padding-left: 15px;
+  background: url('/Images/ui/disclosuretri-shut.gif') no-repeat left 2px;
+}
+a.lessLink
+{
+  padding-left: 15px;
+  background: url('/Images/ui/disclosuretri-open-btm.gif') no-repeat left 3px;
+}
+div#moreRatings div.moreLink,
+div#moreRatings div.lessLink
+{
+  clear: left;
+  /* text-align: right; */
+  /* padding-left: 300px; */ /* to match div.label */
+  padding-bottom: 5px;
+  font-size: 11px;
+}
+
+/* review pane stars */
+ul.ratings
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul.ratings li
+{
+  clear: left;
+}
+ul.ratings li div.label
+{
+  width: 278px;
+  float: left;
+}
+ul.ratings li div.starHolster
+{
+  width: 180px; /* min 102px */
+  height: 3em;
+  float: left;
+}
+div.starFootnote
+{
+  font-size: 10px;
+  padding: 3px 0 0 3px;
+  color: #8c8c8c;
+}
+div.starselect span
+{
+	display: block;
+	width: 19px;
+	height: 15px;
+	line-height: 15px; /* must be equal to height for IE6 */
+	float: left;
+	background: url('/Images/ui/star-select.gif') no-repeat left top;
+	cursor: pointer;
+	cursor: hand;
+}
+div.starselect span.sel {
+  background-position: left bottom;
+}
+div.starHolster a.clear
+{
+  display: block;
+  width: 17px;
+  height: 15px;
+  float: left;
+}
+div.starHolster a.clear { background: url('/Images/ui/star-clear.gif') no-repeat left top }
+div.starHolster a.clear:hover { background: url('/Images/ui/star-clear.gif') no-repeat left bottom }
+
+/* and bullet selection like starselect above, for "Rate this Review" */
+span.bulletselect span
+{
+	display: block;
+	width: 10px;
+	height: 9px;
+	line-height: 9px; /* must be equal to height for IE6 */
+	margin-right: 1px;
+	margin-top: 2px;
+	float: left;
+	background: url('/Images/ui/bullet-select.gif') no-repeat left top;
+	cursor: pointer;
+	cursor: hand;
+}
+span.bulletselect span.sel {
+  background-position: left bottom;
+}
