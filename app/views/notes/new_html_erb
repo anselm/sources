@@ -1,0 +1,1311 @@
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAmxDIRcelCE7QQOeFeIJlKBSoPyWkiPWppCSTMoVR-TmuD6AL2RRLmY_N312oyTVKLOKqvH02Gayy0A"
+  type="text/javascript"></script>
+
+<link href="/images_edit/text.css" rel="stylesheet" type="text/css">
+<link href="/images_edit/layout.css" rel="Stylesheet" type="text/css">
+
+<style type="text/css">
+.table_cell_black {
+font-family:Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #000000;
+padding-bottom:2px;
+vertical-align:middle;
+}
+.table_border {
+padding:2px 4px 2px 4px;
+border-color: #AAAAAA;
+border-width: 1px;
+border-style: solid;
+}
+.editorial_gray a:link,
+.editorial_gray a:active,
+.editorial_gray a:hover,
+.editorial_gray a:visited {
+font-weight:normal;
+}
+</style>
+
+
+<h1>Edit Media Source</h1>
+
+<div id="map" style="float:right;width:400px;height:400px;border:3px solid red;"></div>
+
+<%=
+        results = []
+        results << "<div class='content'><table><tbody>"
+        @note = Note.new
+        form_for(@note, :action => :create ) do
+          Note.get_marks.each do |mark|
+            if mark[:layout] == :banner
+              results << "<div class=header><b>#{mark[:name]}</b></div>"
+            elsif mark[:layout] == nil 
+              results << "<tr align=left valign=top>"
+              results << "<td class=subhead_small_plain valign=middle>"
+              results << "<a href='javascript:void(0)' onclick='openpopup(0);' class='subhead_small_plain'>"
+              results << "#{mark[:name]}</a><br/>"
+              results << text_control(mark[:name], :size => 60, :class => "input_black")
+              results << "</td></tr><tr><td>&nbsp;</td></tr>"
+            elsif mark[:layout] == :big
+              results << "<tr align=left valign=top>"
+              results << "<td class=subhead_small_plain valign=middle>"
+              results << "<a href='javascript:void(0)' onclick='openpopup(0);' class='subhead_small_plain'>"
+              results << "#{mark[:name]}</a><br/>"
+              results << text_area_control(mark[:name], :size => 60, :class => "input_black")
+              results << "</td></tr><tr><td>&nbsp;</td></tr>"
+            elsif mark[:layout] == :menu
+              results << "<tr>"
+              results << "<td valign=top>"
+              results << "<a href='javascript:void(0)' onclick='openpopup(0);' class='subhead_small_plain'>"
+              results << "#{mark[:name]}</a><br/>"
+              results << select_control( mark[:name], :class => "pull_down_black", :collection => :mark[:tokens] )
+              results << "</td></tr><tr><td>&nbsp;</td></tr>"
+              # DOES NOT SET SELECTED - TODO
+            else
+            end
+          end
+        end
+        results.join("\n")
+%>
+
+<tr><td colspan="2">
+<div id="otherSourceTypes">
+<table border="0" cellpadding="1" cellspacing="0">
+<tbody><tr>
+  <td width="125"><img src="/images_edit/spacer.gif" height="3" width="125"></td>
+  <td width="125"><img src="/images_edit/spacer.gif" height="3" width="125"></td>
+  <td width="125"><img src="/images_edit/spacer.gif" height="3" width="125"></td>
+</tr>
+<tr class="body_black_small">
+  <td colspan="3" class="table_cell_black">
+  <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Other Source Types:</a>
+</td>
+</tr>
+<tr class="body_black_small">
+<td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_types_other_1, :value => "Publication", :class=>"body_black_small", :checked=>"checked", :disabled=>"disabled" %>
+<a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Publication</a></td>
+<td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_types_other_2, :value => "Author", :class=>"body_black_small" %>
+<a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Author</a></td>
+<td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_types_other_3, :value => "Newsmaker", :class=>"body_black_small" %>
+<a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Newsmaker</a></td>
+</tr>
+<tr class="body_black_small">
+<td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_types_other_4, :value => "Distributor", :class=>"body_black_small" %>
+<a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Distributor</a></td>
+<td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_types_other_5, :value => "Owner", :class=>"body_black_small" %>
+<a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Owner</a></td>
+<td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_types_other_6, :value => "Other", :class=>"body_black_small" %>
+<a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_types_other', 'Help');" class="subhead_small_plain">Other</a></td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+
+<!------------------------------------------------------------------------------------------------>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr valign="top">
+  <td>
+  <table class="table_border" border="0" cellpadding="1" cellspacing="0">
+      <tbody><tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="middle"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_main', 'Help');" class="subhead_small_plain">Media Type:</a>&nbsp;<span class="editorial_gray">(main)</span>&nbsp; &nbsp;</td>
+        <td colspan="2" class="table_cell_black" nowrap="nowrap" valign="middle">
+
+         <% @selected = @note.new_record? ? "Blog" : @note.source_media_type %>
+         <%= select_control :source_media_type,
+                            :collection => [ "-- Select One --",
+                                             "Blog",
+                                             "Magazine",
+                                             "Newspaper",
+                                             "Online",
+                                             "Radio",
+                                             "TV",
+                                             "Wire Service",
+                                             "Other", 
+                                             "------", 
+                                             "Not Applicable"
+                                           ],
+                            :selected =>  @selected, 
+                            :class => "pull_down_black"
+         %>
+
+</td>
+      </tr>
+     <tr>
+        <td width="125"><img src="/images_edit/spacer.gif" height="5" width="125"></td>
+        <td width="125"><img src="/images_edit/spacer.gif" height="5" width="125"></td>
+        <td width="125"><img src="/images_edit/spacer.gif" height="5" width="125"></td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="middle"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Other Media Types:</a><span class="subhead_small_plain">&nbsp;</span></td>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_1, :value => "Blog", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Blog</a></td>
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_2, :value => "Online", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Online</a></td>
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_3, :value => "Wire Service", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Wire Service</a></td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_4, :value => "Magazine", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Magazine</a></td>
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_5, :value => "Radio", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Radio</a></td>
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_6, :value => "Other", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Other</a></td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_7, :value => "Newspaper", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">Newspaper</a></td>
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">
+<%= checkbox_control :source_media_other_8, :value => "TV", :class=>"body_black_small" %>
+          <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_media_other', 'Help');" class="subhead_small_plain">TV</a></td>
+        <td class="table_cell_black" nowrap="nowrap" valign="bottom">&nbsp;</td>
+      </tr>
+  </tbody></table></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+</tr>
+
+<!------------------------------------------------------------------------------------------------>
+
+<tr class="body_black_small">
+  <td class="table_cell_black" valign="top">
+  <table border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+<td class="subhead_small_plain" valign="middle"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_name', 'Help');" class="subhead_small_plain">Source Ownership:</a><br>
+        </td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap">
+<%= text_control :source_ownership, :size => 60, :class => "input_black" %>
+    </td>
+      </tr>
+  </tbody></table></td>
+</tr>
+
+<!------------------------------------------------------------------------------------------------>
+
+<tr>
+  <td>&nbsp;</td>
+</tr>
+<tr class="body_black_small">
+  <td class="table_cell_black" valign="top">
+  <table border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td width="150"><span class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_online_access', 'Help');" class="subhead_small_plain">Online Access:</a>&nbsp;</span></td>
+        <td><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_audience_size', 'Help');" class="subhead_small_plain">Audience Size:</a>&nbsp;</td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap">
+         <% @selected = @note.new_record? ? "Full Online Access" : @note.online_access %>
+         <%= select_control :online_access,
+                            :collection => [ "-- Select One --",
+                                             "Full Online Access",
+                                             "Limited Online Access",
+                                             "Free Online Subscription",
+                                             "Paid Online Subscription",
+                                           ],
+                            :selected =>  @selected, 
+                            :class => "pull_down_black"
+         %>
+  </td>
+        <td>
+         <% @selected = @note.new_record? ? "Small audience (10K-100K)" : @note.audience_size %>
+         <%= select_control :audience_size,
+                            :collection => [ "-- Select One --",
+                                             "Very large audience (over 1M)",
+                                             "Large audience (500K-1M)",
+                                             "Medium audience (100K-500K)",
+                                             "Small audience (10K-100K)",
+                                             "Very small audience (under 10K)",
+                                             "---------",
+                                             "Not applicable",
+                                             "Not sure",
+                                           ],
+                            :selected =>  @selected, 
+                            :class => "pull_down_black"
+         %>
+   </td>
+      </tr>
+  </tbody></table></td>
+</tr>
+ <tr>
+  <td>&nbsp;</td>
+</tr>
+
+<!------------------------------------------------------------------------------------------------>
+
+<tr class="body_black_small">
+  <td class="table_cell_black" nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_description', 'Help');" class="subhead_small_plain"></a></td>
+</tr>
+<tr class="body_black_small">
+  <td class="table_cell_black" nowrap="nowrap" valign="top">
+    <table class="table_border" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr class="body_black_small">
+        <td colspan="2" class="table_cell_black" valign="top"><span class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_description', 'Help');" class="subhead_small_plain">Description:</a><br>
+          Quote or write a short  description for this source </span><span class="editorial_gray"> (max. 250 words).</span></td>
+      </tr>
+      <tr class="body_black_small">
+        <td colspan="2" class="table_cell_black" valign="top">
+         <%= text_area_control :description, :cols => 60, :rows => 5, :class => "input_black" %>
+        </td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" valign="top">&nbsp;</td>
+        <td class="table_cell_black">&nbsp;</td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_search_results', 'Help');" class="subhead_small_plain">Search Sites:</a> <span class="editorial_gray">(if needed)</span></td>
+        <td class="table_cell_black"><a href="javascript:void(0)" onclick="openSearchPopup('http://www.google.com/search?q=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Google</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://search.yahoo.com/search?p=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Yahoo</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://www.technorati.com/search/Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Technorati</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://en.wikipedia.org/wiki/Special:Search?search=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Wikipedia</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://del.icio.us/search/?all=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">del.icio.us</a></td>
+        <!-- go to URLs above, in a new blank window -->
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black">&nbsp;</td>
+        <td class="table_cell_black" nowrap="nowrap" valign="middle">&nbsp;</td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="subhead_small_plain" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#description_link_address', 'Help');" class="subhead_small_plain">Description Link:</a><span class="editorial_gray"> (if any)</span></td>
+        <td valign="top">
+        </td>
+      </tr>
+      <tr class="body_black_small">
+        <td colspan="2" class="subhead_small_plain" valign="top">
+         <%= text_control :description_link, :cols => 60, :class => "input_black" %>
+         <br>
+         <span class="editorial_gray">(Example: http://www.reuters.com/about.htm)</span>
+        </td>
+      </tr>
+
+<!------------------------------------------------------------------------------------------------>
+
+<!--
+<tr valign="top">
+<td>
+<span class="subhead_small_plain">Publication</span>
+</td>
+<td>
+<div>
+<input id="description_link_publication_name_is_listed" name="description_link_publication_name_is_listed" value="1" type="hidden"> <input id="description_link_publication_name" name="description_link_publication_name" value="Wikipedia" class="input_black" style="width: 319px;" onkeydown="return description_link_publicationEH.keydown(event)" onblur="return description_link_publicationEH.blur()" onfocus="return description_link_publicationEH.focus()" type="text">
+</div>
+<div>
+<iframe id="description_link_publication_recommendationsie6hackmask" src="/images_edit/blank_005.htm" style="height: 200px; width: 320px; display: none; position: absolute; z-index: 1;" scrolling="no"></iframe>
+<ul id="description_link_publication_recommendations" class="typeahead">
+</ul>
+</div>
+<div id="description_link_unlistedPublicationField" style="display: none;">
+<span class="explanation">This publication is not in our database. Please fill in this information:</span>
+<br>
+Source Ownership
+<a href="#" onclick="openPopup('/Help/faq_host.htm#source_ownership', 'Help'); return false;" class="help"><img src="/images_edit/spacer.gif" height="9" width="9"></a>
+&nbsp;&nbsp;
+<select name="description_link_sourceOwnership">
+<option selected="selected" value="">Select Source Ownership:</option>
+<option value="msm">Mainstream</option>
+<option value="ind">Independent</option>
+<option value="">N/A</option>
+</select>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+var description_link_publicationEH = new TypeAheadEventHandler('description_link_publication_name',
+'description_link_publication_name_is_listed',
+'description_link_publication_recommendations',
+'description_link_unlistedPublicationField',
+'description_link_',
+'1')
+</script>
+
+-->
+
+</td>
+</tr>
+    </tbody></table></td>
+</tr>
+
+
+</tbody></table>
+</div>
+</div>
+<script type="text/javascript" charset="utf-8">
+PaneEventHandler.init("div#summaryPanel div.header", "div#summaryPanel", true)
+</script>
+
+
+<!-------------------------------------------------------------------------------------------->
+
+<!-- Tags -->
+<div id="tagsPanel" class="panel sel">
+<div class="header">
+<span class="triangle"><img src="/images_edit/spacer.gif" height="9" width="9"></span>
+Tags
+<!-- <a href="#" onClick="return openPopup('/Help/faq_host.htm#source_tags', 'Help');" class="help"><img src="/Images/newstrust/spacer.gif" width="9" height="9"/></a> -->
+</div>
+<div class="content">
+<table>
+      <tbody><tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="top"><span class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_author_names_featured', 'Help');" class="subhead_small_plain">Featured Authors:</a> </span><span class="editorial_gray">(if any - separate each name with a comma)</span></td>
+      </tr>
+      <tr class="body_black_small">
+       <td class="table_cell_black" nowrap="nowrap" valign="top">
+        <%= text_area_control :featured_authors, :cols => 60, :rows => 4, :class => "input_black" %>
+       </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+
+<!-------------------------------------------------------------------------------------------->
+
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_author_names_reviews', 'Help');" class="subhead_small_plain">Reviewed Authors:</a> <span class="editorial_gray">(from story reviews - read-only)</span></td>
+      </tr>
+      <tr class="body_black_small">
+      
+        <td class="table_cell_black" nowrap="nowrap" valign="top">
+          <%= text_area_control :reviewed_authors, :cols => 60, :rows => 4, :class => "input_black" %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+
+<!-------------------------------------------------------------------------------------------->
+
+      <tr class="body_black_small">
+        <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_managers', 'Help');" class="subhead_small_plain">Managers:</a> <span class="editorial_gray">(if available)</span></td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="top">
+          <%= text_control :managers, :cols => 60, :class => "input_black" %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr class="body_black_small">
+        <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_owners', 'Help');" class="subhead_small_plain">Owners:</a> <span class="editorial_gray">(if available)</span></td>
+      </tr>
+
+<!-------------------------------------------------------------------------------------------->
+
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="top">
+          <%= text_control :owners, :cols => 60, :class => "input_black" %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+
+<!---------------------------------------------------------------->
+
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="baseline"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_organization_type', 'Help');" class="subhead_small_plain">Organization Type:</a> <span class="editorial_gray">(if available)</span> &nbsp;  &nbsp;
+         <% @selected = @note.new_record? ? "Individual" : @note.organization_type %>
+         <%= select_control(:organization_type,
+                            :collection => [ "-- Select One --",
+                                             "Individual",
+                                             "Sole Proprietorship",
+                                             "Partnership",
+                                             "Private Corporation",
+                                             "Public Corporation",
+                                             "Political Action Committee",
+                                             "Government",
+                                             "----------",
+                                             "Other",
+                                             "Not Applicable",
+                                             "Not sure help"
+                                           ],
+                            :selected =>  @selected, 
+                            :class => "pull_down_black" )
+         %>
+        </td>
+      </tr>
+        
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+<tr class="body_black_small">
+<td class="table_cell_black" nowrap="nowrap" valign="top">
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td width="150"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_scope', 'Help');" class="subhead_small_plain">Scope:</a> &nbsp;</td>
+<td><span class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_language', 'Help');" class="subhead_small_plain">Language:</a></span></td>
+</tr>
+<tr>
+<td>
+<select class="input_black" name="source_scope">
+<option value="">-- Select One --</option>
+<option value="5">International</option>
+<option selected="selected" value="4">National</option>
+<option value="3">Regional</option>
+<option value="2">State</option>
+<option value="1">Local</option>
+<option value="0">-----</option>
+<option value="n/a">Not Applicable</option>
+</select>
+</td>
+<td>
+<select class="input_black" name="source_language">
+<option value="">-- Select One --</option>
+<option selected="selected">English</option>
+<option value="">-------</option>
+<option>Chinese</option>
+<option>French</option>
+<option>German</option>
+<option>Italian</option>
+<option>Japanese</option>
+<option>Korean</option>
+<option>Portuguese</option>
+<option>Russian</option>
+<option>Spanish</option>
+<option value="">-------</option>
+<option>Other</option>
+<option value="n/a">Not Applicable</option>
+<option>Not sure</option>
+</select>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="top"><span class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_other_tags', 'Help');" class="subhead_small_plain">Other Tags:</a> </span><span class="editorial_gray">(if any - separate each tag with a comma)</span></td>
+      </tr>
+      <tr class="body_black_small">
+        <td class="table_cell_black" nowrap="nowrap" valign="top"><textarea name="source_other_tags" cols="60" rows="2" class="input_black"></textarea></td>
+      </tr>
+</tbody></table>
+</div>
+</div>
+<script type="text/javascript" charset="utf-8">
+PaneEventHandler.init("div#tagsPanel div.header", "div#tagsPanel", true)
+</script>
+
+
+<!-- Research -->
+<div id="researchPanel" class="panel sel">
+<div class="header">
+<span class="triangle"><img src="/images_edit/spacer.gif" height="9" width="9"></span>
+Research
+<!-- <a href="#" onClick="return openPopup('/Help/faq_host.htm#source_research', 'Help');" class="help"><img src="/Images/newstrust/spacer.gif" width="9" height="9"/></a> -->
+</div>
+<div class="content">
+<table>
+  <tbody><tr class="body_black_small">
+    <td class="table_cell_black" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_related_publications', 'Help');" class="subhead_small_plain">Related Publications:</a><br>
+        <span class="subhead_small_plain">Find publications related to this source </span><span class="editorial_gray">(e.g., partners, properties).</span></td>
+  </tr>
+  <tr class="body_black_small">
+    <td>&nbsp;</td>
+  </tr>
+  <tr valign="top">
+<td>
+<span class="subhead_small_plain" style="width: 120px; display: block; float: left;">Publication 1</span>
+<div>
+<input id="source_related_1_publication_name_is_listed" name="source_related_1_publication_name_is_listed" value="1" type="hidden"> <input id="source_related_1_publication_name" name="source_related_1_publication_name" value="Off the Bus" class="input_black" style="width: 319px;" onkeydown="return source_related_1_publicationEH.keydown(event)" onblur="return source_related_1_publicationEH.blur()" onfocus="return source_related_1_publicationEH.focus()" type="text">
+</div>
+<div>
+<iframe id="source_related_1_publication_recommendationsie6hackmask" src="/images_edit/blank_005.htm" style="margin-left: 120px; height: 200px; width: 320px; display: none; position: absolute; z-index: 1;" scrolling="no"></iframe>
+<ul id="source_related_1_publication_recommendations" class="typeahead" style="margin-left: 120px;">
+</ul>
+</div>
+<div id="source_related_1_unlistedPublicationField" style="margin-left: 120px; display: none;">
+<span class="explanation">This publication is not in our database. Please fill in this information:</span>
+<br>
+Source Ownership
+<a href="#" onclick="openPopup('/Help/faq_host.htm#source_ownership', 'Help'); return false;" class="help"><img src="/images_edit/spacer.gif" height="9" width="9"></a>
+&nbsp;&nbsp;
+<select name="source_related_1_sourceOwnership">
+<option selected="selected" value="">Select Source Ownership:</option>
+<option value="msm">Mainstream</option>
+<option value="ind">Independent</option>
+<option value="">N/A</option>
+</select>
+</div>
+<script type="text/javascript" charset="utf-8">
+var source_related_1_publicationEH = new TypeAheadEventHandler('source_related_1_publication_name',
+'source_related_1_publication_name_is_listed',
+'source_related_1_publication_recommendations',
+'source_related_1_unlistedPublicationField',
+'source_related_1_',
+'1')
+</script>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<span class="subhead_small_plain" style="width: 120px; display: block; float: left;">Publication 2</span>
+<div>
+<input id="source_related_2_publication_name_is_listed" name="source_related_2_publication_name_is_listed" value="1" type="hidden"> <input id="source_related_2_publication_name" name="source_related_2_publication_name" value="" class="input_black" style="width: 319px;" onkeydown="return source_related_2_publicationEH.keydown(event)" onblur="return source_related_2_publicationEH.blur()" onfocus="return source_related_2_publicationEH.focus()" type="text">
+</div>
+<div>
+<iframe id="source_related_2_publication_recommendationsie6hackmask" src="/images_edit/blank_005.htm" style="margin-left: 120px; height: 200px; width: 320px; display: none; position: absolute; z-index: 1;" scrolling="no"></iframe>
+<ul id="source_related_2_publication_recommendations" class="typeahead" style="margin-left: 120px;">
+</ul>
+</div>
+<div id="source_related_2_unlistedPublicationField" style="margin-left: 120px; display: none;">
+<span class="explanation">This publication is not in our database. Please fill in this information:</span>
+<br>
+Source Ownership
+<a href="#" onclick="openPopup('/Help/faq_host.htm#source_ownership', 'Help'); return false;" class="help"><img src="/images_edit/spacer.gif" height="9" width="9"></a>
+&nbsp;&nbsp;
+<select name="source_related_2_sourceOwnership">
+<option selected="selected" value="">Select Source Ownership:</option>
+<option value="msm">Mainstream</option>
+<option value="ind">Independent</option>
+<option value="">N/A</option>
+</select>
+</div>
+<script type="text/javascript" charset="utf-8">
+var source_related_2_publicationEH = new TypeAheadEventHandler('source_related_2_publication_name',
+'source_related_2_publication_name_is_listed',
+'source_related_2_publication_recommendations',
+'source_related_2_unlistedPublicationField',
+'source_related_2_',
+'1')
+</script>
+</td>
+  </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+  <tr class="body_black_small">
+    <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_related_links', 'Help');" class="subhead_small_plain">Related Links:</a><br>
+        <span class="subhead_small_plain">Find informative links about this source </span><span class="editorial_gray">(see search sites below).</span></td>
+  </tr>
+  <tr class="body_black_small">
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="body_black_small">
+    <td class="table_cell_black" nowrap="nowrap" valign="top">
+    <table class="table_border" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr class="body_black_small">
+          <td class="table_cell_black" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_search_results', 'Help');" class="subhead_small_plain">Search Sites:</a> </td>
+          <td class="table_cell_black"><a href="javascript:void(0)" onclick="openSearchPopup('http://www.google.com/search?q=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Google</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://search.yahoo.com/search?p=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Yahoo</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://www.technorati.com/search/Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Technorati</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://en.wikipedia.org/wiki/Special:Search?search=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Wikipedia</a> | <a href="javascript:void(0)" onclick="openSearchPopup('http://del.icio.us/search/?all=Huffington%20Post','Search',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">del.icio.us</a></td>
+          <!-- go to URLs above, in a new blank window -->
+        </tr>
+        <tr class="body_black_small" valign="middle">
+           <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="body_black_small" valign="middle">
+          <td class="table_cell_black"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_related_link_title', 'Help');" class="subhead_small_plain">Link 1 Title:</a></td>
+          <td><input name="source_related_link_title1" class="input_black" size="50" value="" type="text"></td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="subhead_small_plain" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_related_link_address', 'Help');" class="subhead_small_plain">Link 1 Address:</a></td>
+          <td colspan="2" valign="top"><input name="source_related_link_address1" class="input_black" size="50" value="" type="text">
+              <br>
+              <span class="editorial_gray">(Example: http://www.reuters.com/source.htm)</span>
+              <!-- go to URL above, in a new blank window --></td>
+        </tr>
+<tr valign="top">
+<td>
+<span class="subhead_small_plain">Link 1 Publication</span>
+<span class="editorial_gray">(optional)</span>
+</td>
+<td>
+<div>
+<input id="source_related_link_1_publication_name_is_listed" name="source_related_link_1_publication_name_is_listed" value="1" type="hidden"> <input id="source_related_link_1_publication_name" name="source_related_link_1_publication_name" value="" class="input_black" style="width: 319px;" onkeydown="return source_related_link_1_publicationEH.keydown(event)" onblur="return source_related_link_1_publicationEH.blur()" onfocus="return source_related_link_1_publicationEH.focus()" type="text">
+</div>
+<div>
+<iframe id="source_related_link_1_publication_recommendationsie6hackmask" src="/images_edit/blank_005.htm" style="margin-left: 120px; height: 200px; width: 320px; display: none; position: absolute; z-index: 1;" scrolling="no"></iframe>
+<ul id="source_related_link_1_publication_recommendations" class="typeahead" style="margin-left: 120px;">
+</ul>
+</div>
+<div id="source_related_link_1_unlistedPublicationField" style="margin-left: 120px; display: none;">
+<span class="explanation">This publication is not in our database. Please fill in this information:</span>
+<br>
+Source Ownership
+<a href="#" onclick="openPopup('/Help/faq_host.htm#source_ownership', 'Help'); return false;" class="help"><img src="/images_edit/spacer.gif" height="9" width="9"></a>
+&nbsp;&nbsp;
+<select name="source_related_link_1_sourceOwnership">
+<option selected="selected" value="">Select Source Ownership:</option>
+<option value="msm">Mainstream</option>
+<option value="ind">Independent</option>
+<option value="">N/A</option>
+</select>
+</div>
+<script type="text/javascript" charset="utf-8">
+var source_related_link_1_publicationEH = new TypeAheadEventHandler('source_related_link_1_publication_name',
+'source_related_link_1_publication_name_is_listed',
+'source_related_link_1_publication_recommendations',
+'source_related_link_1_unlistedPublicationField',
+'source_related_link_1_',
+'1')
+</script>
+</td>
+</tr>
+    </tbody></table></td>
+  </tr>
+
+  <tr class="body_black_small">
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="body_black_small">
+    <td class="table_cell_black" nowrap="nowrap" valign="top">
+    <table class="table_border" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr class="body_black_small" valign="middle">
+          <td class="table_cell_black"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_related_link_title', 'Help');" class="subhead_small_plain">Link 2 Title:</a></td>
+          <td><input name="source_related_link_title2" class="input_black" size="50" value="" type="text"></td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="subhead_small_plain" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_related_link_address', 'Help');" class="subhead_small_plain">Link 2 Address:</a></td>
+          <td colspan="2" valign="top"><input name="source_related_link_address2" class="input_black" size="50" value="" type="text">
+              <br>
+              <span class="editorial_gray">(Example: http://www.reuters.com/source.htm)</span>
+              <!-- go to URL above, in a new blank window --></td>
+        </tr>
+        <tr>
+         <td colspan="2">&nbsp;</td>
+        </tr>
+<tr valign="top">
+<td>
+<span class="subhead_small_plain">Link 2 Publication</span>
+<span class="editorial_gray">(optional)</span>
+</td>
+<td>
+<div>
+<input id="source_related_link_2_publication_name_is_listed" name="source_related_link_2_publication_name_is_listed" value="1" type="hidden"> <input id="source_related_link_2_publication_name" name="source_related_link_2_publication_name" value="" class="input_black" style="width: 319px;" onkeydown="return source_related_link_2_publicationEH.keydown(event)" onblur="return source_related_link_2_publicationEH.blur()" onfocus="return source_related_link_2_publicationEH.focus()" type="text">
+</div>
+<div>
+<iframe id="source_related_link_2_publication_recommendationsie6hackmask" src="/images_edit/blank_005.htm" style="margin-left: 120px; height: 200px; width: 320px; display: none; position: absolute; z-index: 1;" scrolling="no"></iframe>
+<ul id="source_related_link_2_publication_recommendations" class="typeahead" style="margin-left: 120px;">
+</ul>
+</div>
+<div id="source_related_link_2_unlistedPublicationField" style="margin-left: 120px; display: none;">
+<span class="explanation">This publication is not in our database. Please fill in this information:</span>
+<br>
+Source Ownership
+<a href="#" onclick="openPopup('/Help/faq_host.htm#source_ownership', 'Help'); return false;" class="help"><img src="/images_edit/spacer.gif" height="9" width="9"></a>
+&nbsp;&nbsp;
+<select name="source_related_link_2_sourceOwnership">
+<option selected="selected" value="">Select Source Ownership:</option>
+<option value="msm">Mainstream</option>
+<option value="ind">Independent</option>
+<option value="">N/A</option>
+</select>
+</div>
+<script type="text/javascript" charset="utf-8">
+var source_related_link_2_publicationEH = new TypeAheadEventHandler('source_related_link_2_publication_name',
+'source_related_link_2_publication_name_is_listed',
+'source_related_link_2_publication_recommendations',
+'source_related_link_2_unlistedPublicationField',
+'source_related_link_2_',
+'1')
+</script>
+</td>
+</tr>
+    </tbody></table></td>
+  </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+  <tr class="body_black_small">
+    <td class="table_cell_black" nowrap="nowrap" valign="top"><span class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_duplicate_links', 'Help');" class="subhead_small_plain">Duplicate Links:</a> &nbsp; <span class="editorial_gray">List any other web sites for this source below (one per line):</span><br>
+          <textarea name="source_duplicate_links" cols="60" rows="3" class="input_black"></textarea>
+    </span></td>
+  </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+  <tr class="body_black_small">
+    <td class="table_cell_black" nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_contact_info', 'Help');" class="subhead_small_plain">Source Contact Info:</a><br>
+      <span class="subhead_small_plain">Indicate how our members can contact this source.</span></td>
+  </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+  <tr valign="top">
+    <td class="subhead_small_plain">
+      <table class="table_border" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr valign="top">
+          <td class="subhead_small_plain"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_web_contact_address', 'Help');" class="subhead_small_plain">Web Contact Address:</a> <span class="editorial_gray">(e.g., "contact us" form)</span><br>
+  <input name="source_web_contact_address" class="input_black" value="" size="60" type="text">
+  <br>
+  <span class="editorial_gray">(Example: http://www.reuters.com/contact_us.htm ) &nbsp; </span></td>
+        </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+        <tr class="body_black_small">
+          <td class="table_cell_black" nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_public_email_address', 'Help');" class="subhead_small_plain">Public Email Address:</a> <span class="editorial_gray">(as published by this source)</span></td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="table_cell_black" nowrap="nowrap" valign="top">
+          <input name="source_public_email_address" class="input_black" value="" size="60" type="text">
+            <br>
+            <span class="editorial_gray"> (Example: editor@sourcename.com) &nbsp; </span></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="table_cell_black" nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_public_phone_number', 'Help');" class="subhead_small_plain">Public Phone Number:</a> <span class="editorial_gray">(include area code and description)</span></td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="table_cell_black" nowrap="nowrap" valign="top"><input name="source_public_phone_number" class="input_black" value="" size="60" type="text"></td>
+        </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr valign="top">
+    <td><table border="0" cellpadding="1" cellspacing="0">
+        <tbody><tr>
+          <td class="subhead_small_plain" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_location', 'Help');" class="subhead_small_plain">Location:</a> &nbsp; </td>
+          <td><span class="subhead_small_plain">Street address 1:</span><br>
+<input name="source_address1" class="input_black" size="50" value="" type="text">
+          <br><br>
+<span class="subhead_small_plain">Street address 2:</span><br>
+<input name="source_address2" class="input_black" size="50" value="" type="text">
+
+<br><br>
+<span class="subhead_small_plain">Enter a city or other location:</span><br>
+<input name="source_city" class="input_black" size="50" value="New York City, Los Angeles" type="text">
+</td>
+</tr>
+<tr>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td></td>
+          <td valign="top"><div id="USState"><p><span class="subhead_small_plain">Select a state:</span><br>
+<select name="source_state" class="pull_down_black">
+<option selected="selected" value="">Select a State</option>
+<option value="Alabama">Alabama</option>
+<option value="Alaska">Alaska</option>
+<option value="Arizona">Arizona</option>
+<option value="Arkansas">Arkansas</option>
+<option value="California">California</option>
+<option value="Colorado">Colorado</option>
+<option value="Connecticut">Connecticut</option>
+<option value="District of Columbia">District of Columbia</option>
+<option value="Delaware">Delaware</option>
+<option value="Florida">Florida</option>
+<option value="Georgia">Georgia</option>
+<option value="Hawaii">Hawaii</option>
+<option value="Iowa">Iowa</option>
+<option value="Idaho">Idaho</option>
+<option value="Illinois">Illinois</option>
+<option value="Indiana">Indiana</option>
+<option value="Kansas">Kansas</option>
+<option value="Kentucky">Kentucky</option>
+<option value="Louisiana">Louisiana</option>
+<option value="Maine">Maine</option>
+<option value="Maryland">Maryland</option>
+<option value="Massachusetts">Massachusetts</option>
+<option value="Michigan">Michigan</option>
+<option value="Minnesota">Minnesota</option>
+<option value="Mississippi">Mississippi</option>
+<option value="Missouri">Missouri</option>
+<option value="Montana">Montana</option>
+<option value="Nebraska">Nebraska</option>
+<option value="Nevada">Nevada</option>
+<option value="New Hampshire">New Hampshire</option>
+<option value="New Jersey">New Jersey</option>
+<option value="New Mexico">New Mexico</option>
+<option value="New York">New York</option>
+<option value="North Carolina">North Carolina</option>
+<option value="North Dakota">North Dakota</option>
+<option value="Ohio">Ohio</option>
+<option value="Oklahoma">Oklahoma</option>
+<option value="Oregon">Oregon</option>
+<option value="Pennsylvania">Pennsylvania</option>
+<option value="Rhode Island">Rhode Island</option>
+<option value="South Carolina">South Carolina</option>
+<option value="South Dakota">South Dakota</option>
+<option value="Tennessee">Tennessee</option>
+<option value="Texas">Texas</option>
+<option value="Utah">Utah</option>
+<option value="Vermont">Vermont</option>
+<option value="Virginia">Virginia</option>
+<option value="Washington">Washington</option>
+<option value="West Virginia">West Virginia</option>
+<option value="Wisconsin">Wisconsin</option>
+<option value="Wyoming">Wyoming</option>
+<option value="">-----</option>
+<option value="n/a">Not Applicable</option>
+</select>
+</p><p>&nbsp;</p>
+</div>
+<select name="source_country" class="pull_down_black" onchange="updateUSState()">
+<option value="">Select a Country</option>
+<option selected="selected" value="United States of America">United States of America</option>
+<option value="Afghanistan">Afghanistan</option>
+<option value="Albania">Albania</option>
+<option value="Algeria">Algeria</option>
+<option value="American Samoa">American Samoa</option>
+<option value="Andorra">Andorra</option>
+<option value="Angola">Angola</option>
+<option value="Anguilla">Anguilla</option>
+<option value="Antarctica">Antarctica</option>
+<option value="Antigua and Barbuda">Antigua and Barbuda</option>
+<option value="Argentina">Argentina</option>
+<option value="Armenia">Armenia</option>
+<option value="Aruba">Aruba</option>
+<option value="Australia">Australia</option>
+<option value="Austria">Austria</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Bahamas">Bahamas</option>
+<option value="Bahrain">Bahrain</option>
+<option value="Bangladesh">Bangladesh</option>
+<option value="Barbados">Barbados</option>
+<option value="Belarus">Belarus</option>
+<option value="Belgium">Belgium</option>
+<option value="Belize">Belize</option>
+<option value="Benin">Benin</option>
+<option value="Bermuda">Bermuda</option>
+<option value="Bhutan">Bhutan</option>
+<option value="Bolivia">Bolivia</option>
+<option value="Bosnia and Herzegowina">Bosnia and Herzegowina</option>
+<option value="Botswana">Botswana</option>
+<option value="Bouvet Island">Bouvet Island</option>
+<option value="Brazil">Brazil</option>
+<option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+<option value="Brunei Darussalam">Brunei Darussalam</option>
+<option value="Bulgaria">Bulgaria</option>
+<option value="Burkina Faso">Burkina Faso</option>
+<option value="Myanmar">Burma (Myanmar)</option>
+<option value="Burundi">Burundi</option>
+<option value="Cambodia">Cambodia</option>
+<option value="Cameroon">Cameroon</option>
+<option value="Canada">Canada</option>
+<option value="Cape Verde">Cape Verde</option>
+<option value="Cayman Islands">Cayman Islands</option>
+<option value="Central African Republic">Central African Republic</option>
+<option value="Chad">Chad</option>
+<option value="Chile">Chile</option>
+<option value="China">China</option>
+<option value="Christmas Island">Christmas Island</option>
+<option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+<option value="Colombia">Colombia</option>
+<option value="Comoros">Comoros</option>
+<option value="Democratic Republic of the Congo">Congo (Democratic Republic of the)</option>
+<option value="Republic of the Congo">Congo (Republic of the)</option>
+<option value="Cook Islands">Cook Islands</option>
+<option value="Costa Rica">Costa Rica</option>
+<option value="Cote D'Ivoire">Cote D'Ivoire</option>
+<option value="Cuba">Cuba</option>
+<option value="Croatia">Croatia</option>
+<option value="Cyprus">Cyprus</option>
+<option value="Czech Republic">Czech Republic</option>
+<option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+<option value="Denmark">Denmark</option>
+<option value="Djibouti">Djibouti</option>
+<option value="Dominica">Dominica</option>
+<option value="Dominican Republic">Dominican Republic</option>
+<option value="East Timor">East Timor</option>
+<option value="Ecuador">Ecuador</option>
+<option value="Egypt">Egypt</option>
+<option value="El Salvador">El Salvador</option>
+<option value="Equatorial Guinea">Equatorial Guinea</option>
+<option value="Eritrea">Eritrea</option>
+<option value="Estonia">Estonia</option>
+<option value="Ethiopia">Ethiopia</option>
+<option value="Falkland Islands">Falkland Islands</option>
+<option value="Faroe Islands">Faroe Islands</option>
+<option value="Fiji">Fiji</option>
+<option value="Finland">Finland</option>
+<option value="France">France</option>
+<option value="French Guiana">French Guiana</option>
+<option value="French Polynesia">French Polynesia</option>
+<option value="French Southern Territories">French Southern Territories</option>
+<option value="Gabon">Gabon</option>
+<option value="Gambia">Gambia</option>
+<option value="Georgia">Georgia</option>
+<option value="Germany">Germany</option>
+<option value="Ghana">Ghana</option>
+<option value="Gibraltar">Gibraltar</option>
+<option value="Greece">Greece</option>
+<option value="Greenland">Greenland</option>
+<option value="Grenada">Grenada</option>
+<option value="Guadeloupe">Guadeloupe</option>
+<option value="Guam">Guam</option>
+<option value="Guatemala">Guatemala</option>
+<option value="Guinea">Guinea</option>
+<option value="Guinea-Bissau">Guinea-Bissau</option>
+<option value="Guyana">Guyana</option>
+<option value="Haiti">Haiti</option>
+<option value="Heard and McDonald Islands">Heard and McDonald Islands</option>
+<option value="Honduras">Honduras</option>
+<option value="Hong Kong">Hong Kong</option>
+<option value="Hungary">Hungary</option>
+<option value="Iceland">Iceland</option>
+<option value="India">India</option>
+<option value="Indonesia">Indonesia</option>
+<option value="Iran">Iran</option>
+<option value="Iraq">Iraq</option>
+<option value="Ireland">Ireland</option>
+<option value="Israel">Israel</option>
+<option value="Italy">Italy</option>
+<option value="Jamaica">Jamaica</option>
+<option value="Japan">Japan</option>
+<option value="Jordan">Jordan</option>
+<option value="Kazakhstan">Kazakhstan</option>
+<option value="Kenya">Kenya</option>
+<option value="Kiribati">Kiribati</option>
+<option value="North Korea">Korea (North)</option>
+<option value="South Korea">Korea (South)</option>
+<option value="Kuwait">Kuwait</option>
+<option value="Kyrgyzstan">Kyrgyzstan</option>
+<option value="Laos">Laos</option>
+<option value="Latvia">Latvia</option>
+<option value="Lebanon">Lebanon</option>
+<option value="Lesotho">Lesotho</option>
+<option value="Liberia">Liberia</option>
+<option value="Libya">Libya</option>
+<option value="Liechtenstein">Liechtenstein</option>
+<option value="Lithuania">Lithuania</option>
+<option value="Luxembourg">Luxembourg</option>
+<option value="Macau">Macau</option>
+<option value="Macedonia">Macedonia</option>
+<option value="Madagascar">Madagascar</option>
+<option value="Malawi">Malawi</option>
+<option value="Malaysia">Malaysia</option>
+<option value="Maldives">Maldives</option>
+<option value="Mali">Mali</option>
+<option value="Malta">Malta</option>
+<option value="Marshall Islands">Marshall Islands</option>
+<option value="Martinique">Martinique</option>
+<option value="Mauritania">Mauritania</option>
+<option value="Mauritius">Mauritius</option>
+<option value="Mayotte">Mayotte</option>
+<option value="Mexico">Mexico</option>
+<option value="Micronesia">Micronesia</option>
+<option value="Moldova">Moldova</option>
+<option value="Monaco">Monaco</option>
+<option value="Mongolia">Mongolia</option>
+<option value="Montenegro">Montenegro</option>
+<option value="Montserrat">Montserrat</option>
+<option value="Morocco">Morocco</option>
+<option value="Mozambique">Mozambique</option>
+<option value="Myanmar">Myanmar (Burma)</option>
+<option value="Namibia">Namibia</option>
+<option value="Nauru">Nauru</option>
+<option value="Nepal">Nepal</option>
+<option value="Netherlands">Netherlands</option>
+<option value="Netherlands Antilles">Netherlands Antilles</option>
+<option value="New Caledonia">New Caledonia</option>
+<option value="New Zealand">New Zealand</option>
+<option value="Nicaragua">Nicaragua</option>
+<option value="Niger">Niger</option>
+<option value="Nigeria">Nigeria</option>
+<option value="Niue">Niue</option>
+<option value="Norfolk Island">Norfolk Island</option>
+<option value="North Korea">North Korea</option>
+<option value="Northern Mariana Islands">Northern Mariana Islands</option>
+<option value="Norway">Norway</option>
+<option value="Oman">Oman</option>
+<option value="Pakistan">Pakistan</option>
+<option value="Palau">Palau</option>
+<option value="Palestinian Territory">Palestinian Territory</option>
+<option value="Panama">Panama</option>
+<option value="Papua New Guinea">Papua New Guinea</option>
+<option value="Paraguay">Paraguay</option>
+<option value="Peru">Peru</option>
+<option value="Philippines">Philippines</option>
+<option value="Pitcairn">Pitcairn</option>
+<option value="Poland">Poland</option>
+<option value="Portugal">Portugal</option>
+<option value="Puerto Rico">Puerto Rico</option>
+<option value="Qatar">Qatar</option>
+<option value="Republic of the Congo">Republic of the Congo</option>
+<option value="Reunion">Reunion</option>
+<option value="Romania">Romania</option>
+<option value="Russia">Russia</option>
+<option value="Rwanda">Rwanda</option>
+<option value="Saint Helena">Saint Helena</option>
+<option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+<option value="Saint Lucia">Saint Lucia</option>
+<option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+<option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+<option value="Samoa">Samoa</option>
+<option value="San Marino">San Marino</option>
+<option value="Sao Tome and Principe">Sao Tome and Principe</option>
+<option value="Saudi Arabia">Saudi Arabia</option>
+<option value="Serbia">Serbia</option>
+<option value="Senegal">Senegal</option>
+<option value="Seychelles">Seychelles</option>
+<option value="Sierra Leone">Sierra Leone</option>
+<option value="Singapore">Singapore</option>
+<option value="Slovakia (Slovak Republic)">Slovakia (Slovak Republic)</option>
+<option value="Slovenia">Slovenia</option>
+<option value="Solomon Islands">Solomon Islands</option>
+<option value="Somalia">Somalia</option>
+<option value="South Africa">South Africa</option>
+<option value="South Georgia and the South Sandwich Islands">South Georgia and the South Sandwich Islands</option>
+<option value="South Korea">South Korea</option>
+<option value="Spain">Spain</option>
+<option value="Sri Lanka">Sri Lanka</option>
+<option value="Sudan">Sudan</option>
+<option value="Suriname">Suriname</option>
+<option value="Svalbard and Jan Mayen Islands">Svalbard and Jan Mayen Islands</option>
+<option value="Swaziland">Swaziland</option>
+<option value="Sweden">Sweden</option>
+<option value="Switzerland">Switzerland</option>
+<option value="Syria">Syria</option>
+<option value="Taiwan">Taiwan</option>
+<option value="Tajikistan">Tajikistan</option>
+<option value="Tanzania">Tanzania</option>
+<option value="Tibet">Tibet</option>
+<option value="Thailand">Thailand</option>
+<option value="Togo">Togo</option>
+<option value="Tokelau">Tokelau</option>
+<option value="Tonga">Tonga</option>
+<option value="Trinidad and Tobago">Trinidad and Tobago</option>
+<option value="Tunisia">Tunisia</option>
+<option value="Turkey">Turkey</option>
+<option value="Turkmenistan">Turkmenistan</option>
+<option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+<option value="Tuvalu">Tuvalu</option>
+<option value="Uganda">Uganda</option>
+<option value="United Arab Emirates">United Arab Emirates</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+<option value="Urkraine">Urkraine</option>
+<option value="Uruguay">Uruguay</option>
+<option value="Uzbekistan">Uzbekistan</option>
+<option value="Vanuatu">Vanuatu</option>
+<option value="Vatican City State (Holy See)">Vatican City State (Holy See)</option>
+<option value="Venezuela">Venezuela</option>
+<option value="Vietnam">Vietnam</option>
+<option value="Virgin Islands (British)">Virgin Islands (British)</option>
+<option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
+<option value="Wallis and Futuna Islands">Wallis and Futuna Islands</option>
+<option value="Western Sahara">Western Sahara</option>
+<option value="Yemen">Yemen</option>
+<option value="Zaire">Zaire</option>
+<option value="Zambia">Zambia</option>
+<option value="Zimbabwe">Zimbabwe</option>
+<option value="">-----</option>
+<option value="n/a">Not applicable</option>
+</select>
+</td>
+</tr>
+<tr>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td valign="top">
+<span class="subhead_small_plain">ZIP or country code:</span><br>
+<input name="source_zip" class="input_black" size="20" value="" type="text">
+</td>
+</tr>
+  </tbody></table>
+</td></tr><tr>
+<td>&nbsp;</td>
+</tr>
+        <tr valign="top">
+          <td class="subhead_small_plain" valign="middle"><span class="editorial_gray"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_representative_name', 'Help');" class="subhead_small_plain">Representative Name:</a> (if available)</span><br>
+            <input name="source_representative_name" class="input_black" value="" size="60" type="text"></td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="table_cell_black" nowrap="nowrap" valign="baseline"><input name="source_representative_member_check" class="body_black_small" value="true" type="checkbox">
+            <a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_representative_name', 'Help');" class="subhead_small_plain">NewsTrust Member</a> <span class="editorial_gray">(enter NewsTrust full member name above)</span></td>
+        </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+        <tr valign="top">
+          <td class="subhead_small_plain" valign="middle"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_representative_email', 'Help');" class="subhead_small_plain">Representative Email:</a> <span class="editorial_gray">(seen by NewsTrust hosts only)</span><br>
+            <input name="source_representative_email" class="input_black" value="" size="60" type="text">
+            <br>
+            <span class="editorial_gray">(Example: representative@sourcename.com) &nbsp; </span></td>
+        </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+        <tr class="body_black_small">
+          <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_representative_phone', 'Help');" class="subhead_small_plain">Representative Phone Number:</a> <span class="editorial_gray">(seen by NewsTrust hosts only)</span></td>
+        </tr>
+        <tr class="body_black_small">
+          <td class="table_cell_black" nowrap="nowrap" valign="top"><input name="source_representative_phone" class="input_black" value="" size="60" type="text"></td>
+        </tr>
+    </tbody></table></td>
+  </tr>
+</tbody></table>
+</div>
+</div>
+<script type="text/javascript" charset="utf-8">
+PaneEventHandler.init("div#researchPanel div.header", "div#researchPanel", true)
+</script>
+
+<!-- Editorial -->
+<div id="editorialPanel" class="panel sel">
+<div class="header">
+<span class="triangle"><img src="/images_edit/spacer.gif" height="9" width="9"></span>
+Editorial
+<!-- <a href="#" onClick="return openPopup('/Help/faq_host.htm#source_editorial', 'Help');" class="help"><img src="/Images/newstrust/spacer.gif" width="9" height="9"/></a> -->
+</div>
+<div class="content">
+<table>
+          <tbody><tr valign="top">
+            <td>
+              <table border="0" cellpadding="1" cellspacing="0">
+                <tbody><tr class="body_black_small">
+                  <td nowrap="nowrap" width="120"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_report_options', 'Help');" class="subhead_small_plain">Source&nbsp;Report&nbsp;Options:</a>&nbsp;</td>
+                  <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_report_options', 'Help');" class="subhead_small_plain">Hide</a> &nbsp; </td>
+                  <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_report_options', 'Help');" class="subhead_small_plain">Show</a> &nbsp; </td>
+                  <td nowrap="nowrap" valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_report_options', 'Help');" class="subhead_small_plain">Feature</a></td>
+                  <td></td>
+                </tr>
+                <tr class="body_black_small">
+                  <td class="subhead_small_plain">About this Source</td>
+                  <td class="subhead_small_plain" align="center"><input name="about_source_status" value="hide" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="about_source_status" value="list" checked="checked" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="about_source_status" value="feature" type="radio"></td>
+                  <td></td>
+                </tr>
+                <tr class="body_black_small">
+                  <td class="subhead_small_plain">Discuss this Source</td>
+                  <td class="subhead_small_plain" align="center"><input name="discuss_source_status" value="hide" checked="checked" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="discuss_source_status" value="list" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="discuss_source_status" value="feature" type="radio"></td>
+                  <td></td>
+                </tr>
+                <tr class="body_black_small">
+                  <td class="subhead_small_plain">Contact this Source</td>
+                  <td class="subhead_small_plain" align="center"><input name="contact_source_status" value="hide" checked="checked" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="contact_source_status" value="list" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="contact_source_status" value="feature" type="radio"></td>
+                  <td></td>
+                </tr>
+                                                                <tr class="body_black_small">
+                  <td class="subhead_small_plain">Show Logo</td>
+                  <td class="subhead_small_plain" align="center"><input name="source_logo_status" value="hide" type="radio"></td>
+                  <td class="subhead_small_plain" align="center"><input name="source_logo_status" value="list" checked="checked" type="radio"></td>
+                  <td>&nbsp;</td>
+                  <td class="subhead_small_plain" align="center"><img src="/images_edit/huffington_post.gif" width="160"></td>
+                </tr>
+              </tbody></table>
+            </td>
+         </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+<tr><td>
+                <table border="0" cellpadding="1" cellspacing="0">
+                  <tbody><tr class="subhead_small_plain" valign="middle">
+                    <td nowrap="nowrap"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_editorial_priority', 'Help');" class="subhead_small_plain">Editorial Priority:</a>&nbsp; &nbsp; &nbsp;</td>
+                    <td class="subhead_small_plain" nowrap="nowrap">
+<select name="source_editorial_priority" size="1" class="pull_down_black">
+<option selected="selected" value="">-- Select One --</option>
+<option value="5">Very high</option>
+<option value="4">High</option>
+<option value="3">Medium</option>
+<option value="2">Low</option>
+<option value="1">Very low</option>
+<option value="Not sure">Not sure</option>
+</select></td>
+                  </tr>
+              </tbody></table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr valign="baseline">
+            <td class="editorial_gray"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_hosts', 'Help');" class="subhead_small_plain">Hosted by:</a> (enter full member  names, separated by commas)<br>
+                  <input name="source_hosts" class="input_black" value="" size="60" disabled="disabled" type="text">
+                  <br>
+                  (This read-only field can only be edited by a NewTrust administrator) &nbsp; <a href="mailto:host@newstrust.net" class="editorial_gray">Email Administrator</a></td>
+          </tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+          <tr class="body_black_small" valign="top">
+          	<td>
+          		<table border="0" cellpadding="1" cellspacing="0">
+          		<tbody><tr>
+                  <td valign="top"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_edited_by', 'Help');" class="subhead_small_plain">Edited by:</a>&nbsp;&nbsp;</td>
+                  <td class="subhead_small_plain" valign="top">
+         <a href="javascript:void(0)" onclick="openPopup('/webx?224@@308f288@.eef9475','_blank','restore','',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Rod Amis</a>, <a href="javascript:void(0)" onclick="openPopup('/webx?224@@303e11a@.eef9475','_blank','restore','',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Ezra Fox</a>, <a href="javascript:void(0)" onclick="openPopup('/webx?224@@307edd2@.eef9475','_blank','restore','',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Kaizar Campwala</a>, <a href="javascript:void(0)" onclick="openPopup('/webx?224@@2fbfdc4@.eef9475','_blank','restore','',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Fabrice Florin</a></td>
+              </tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+</tr>
+  <tr>
+<td nowrap="nowrap"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_last_edit_date', 'Help');" class="subhead_small_plain">Last Edit Date:</a>&nbsp;&nbsp;</td>
+<td class="subhead_small_plain" nowrap="nowrap">Dec. 19, 2007, 12:23 am PST by <a href="javascript:void(0)" onclick="openPopup('/webx?224@@2fbfdc4@.eef9475','_blank','restore','',',scrollbars=yes,resizable=yes,status=yes,directories=yes,location=yes,menubar=yes,toolbar=yes');" class="subhead_small_plain">Fabrice Florin</a>
+</td>
+  </tr>
+            </tbody></table></td>
+          </tr>
+<tr>
+  <td>&nbsp;</td>
+</tr>
+          <tr valign="top">
+            <td><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_edit_notes', 'Help');" class="subhead_small_plain">Notes:</a> &nbsp; <span class="editorial_gray">Add any editorial notes at the end of this shared notepad, with your initials.</span><br>
+                  <textarea name="source_edit_notes" cols="60" rows="4" class="input_black"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr valign="top">
+            <td class="subhead_small_plain" valign="middle"><span class="editorial_gray"><a href="javascript:void(0)" onclick="openPopup('/Help/faq_host.htm#source_file_name', 'Help');" class="subhead_small_plain">File Name:</a> (read-only)</span>&nbsp;
+                <input name="source_file_name" class="editorial_gray" value="huffington_post" size="32" disabled="disabled" type="text">
+</td>
+          </tr>
+</tbody></table>
+</div>
+</div>
+<script type="text/javascript" charset="utf-8">
+PaneEventHandler.init("div#editorialPanel div.header", "div#editorialPanel", true)
+</script>
+
+
+<div class="buttons">
+<%= submit_button 'Create' %>
+</div>
+
+<% end %>
+
+
+
+<script type="text/javascript">
+function load() {
+ if (GBrowserIsCompatible()) {
+  var map = new GMap2(document.getElementById("map"));
+  map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+ }
+}
+load();
+</script>
+

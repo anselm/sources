@@ -1,0 +1,42 @@
+<table width=100%><tr><td valign=top width=50%>
+<h1>Media Sources</h1>
+
+Page:
+<%
+ 0.step(@total,@cap) { |val|
+%>
+<a href="?offset=<%=val%>">[<%=val%>]</a>
+<%
+ } 
+%>
+
+<ul>
+<%
+  count = 0
+  @notes.each do |n|
+  count = count + 1
+%>
+<li>
+<% if n.destroyed != "true" %>
+<h2><%=count%>) <a href="/notes/<%=n.id%>"> > <%=n.name%></a></h2></li>
+<% else %>
+<h2><font color=red><%=count%>) <a style="color:red;" href="/notes/<%=n.id%>"><%=n.name%></a></font></h2></li>
+<% 
+end
+end %>
+</ul>
+</td><td valign=top>
+<div id="map" style="width:400px;height:400px;border:1px solid red;"></div>
+</td></tr></table>
+
+
+<script>
+var map_marker_chase = false;
+var map_markers = [
+<% @notes.each do |n| 
+%>
+  { "lat":"<%=n.latitude%>","lon":"<%=n.longitude%>","description":"See <a href='/notes/<%=n.id%>'><%=n.name%></a> for more" },
+<% end %>
+];
+</script>
+
